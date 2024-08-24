@@ -11,6 +11,20 @@ from livekit.agents.llm import (
 from livekit.agents.voice_assistant import VoiceAssistant
 from livekit.plugins import deepgram, openai, silero
 
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from the .env file
+load_dotenv()
+
+LIVEKIT_URL = os.getenv("LIVEKIT_URL")
+LIVEKIT_API_KEY = os.getenv("LIVEKIT_API_KEY")
+LIVEKIT_API_SECRET = os.getenv("LIVEKIT_API_SECRET")
+DEEPGRAM_API_KEY = os.getenv("DEEPGRAM_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+
+
 
 class AssistantFunction(agents.llm.FunctionContext):
     """This class is used to define functions that will be called by the assistant."""
@@ -67,7 +81,7 @@ async def entrypoint(ctx: JobContext):
         ]
     )
 
-    gpt = openai.LLM(model="gpt-4o")
+    gpt = openai.LLM(model="gpt-4o-mini")
 
     # Since OpenAI does not support streaming TTS, we'll use it with a StreamAdapter
     # to make it compatible with the VoiceAssistant
